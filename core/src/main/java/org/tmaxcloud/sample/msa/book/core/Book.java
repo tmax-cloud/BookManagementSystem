@@ -1,5 +1,4 @@
-package org.tmaxcloud.sampleapp.book.bookmanagementsystem;
-
+package org.tmaxcloud.sample.msa.book.core;
 
 import javax.persistence.*;
 
@@ -7,12 +6,13 @@ import javax.persistence.*;
 @Table(name = "BOOK")
 public class Book {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private int quantity;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String title, int quantity) {
         this.title = title;

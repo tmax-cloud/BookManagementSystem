@@ -1,4 +1,4 @@
-package org.tmaxcloud.sampleapp.book.bookmanagementsystem;
+package org.tmaxcloud.sample.msa.book.core;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package org.tmaxcloud.sampleapp.book.bookmanagementsystem;
+package org.tmaxcloud.sample.msa.book.core;
 
 public class BookNotFoundException extends RuntimeException {
     BookNotFoundException(Long id) {

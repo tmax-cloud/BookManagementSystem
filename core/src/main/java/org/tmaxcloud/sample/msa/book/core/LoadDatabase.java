@@ -1,4 +1,4 @@
-package org.tmaxcloud.sampleapp.book.bookmanagementsystem;
+package org.tmaxcloud.sample.msa.book.core;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
