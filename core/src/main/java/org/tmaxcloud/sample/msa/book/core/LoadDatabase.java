@@ -13,8 +13,10 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(BookRepository repository) {
         return args -> {
-            log.info("Preloading " + repository.save(new Book("Old man and the sea", 1)));
-            log.info("Preloading " + repository.save(new Book("Crime and punishment", 2)));
+            log.info("Preloading " + repository.save(new Book("Old man and the sea", 10)));
+            log.info("Preloading " + repository.save(new Book("Crime and punishment", 7)));
+            log.info("Preloading " + repository.save(new Book("Load of the Rings", 33)));
+            log.info("Preloading " + repository.save(new Book("Fundamentals of mathematical statistics", 1)));
         };
     }
 }
