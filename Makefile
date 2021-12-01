@@ -47,8 +47,14 @@ push-image:
 run:
 	@$(DOCKERRUN) --name bookmanager -it --rm  \
 		-e LOGLEVEL=TRACE \
+		-e DB_HOSTNAME= \
+		-e DB_PORT= \
+		-e DB_DATABASE= \
+		-e DB_USER= \
+		-e DB_PASS= \
+		-p 8080:8080 \
+		--net=host \
 		$(DOCKER_IMAGE_NAME):$(VERSIONTAG)
 
 .PHONY: smoke
 smoke: build run
-

@@ -1,12 +1,9 @@
-FROM openjdk:8-jre-alpine3.9
+FROM openjdk:11
 
 LABEL maintainer="taejune_ahn@tmax.co.kr"
 
 ADD bin/ /app
 
-RUN apk update ; \
-	apk add tzdata
-
 WORKDIR /app
 
-CMD ["/usr/bin/java", "-jar", "BookManagementSystem-0.0.1.jar"]
+CMD ["java", "-jar", "BookManagementSystem-0.0.1.jar"]
