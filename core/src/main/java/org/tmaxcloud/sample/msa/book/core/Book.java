@@ -10,6 +10,8 @@ public class Book {
     private Long id;
     private String title;
     private int quantity;
+    @Transient
+    private float rating;
 
     public Book() {
     }
@@ -38,6 +40,10 @@ public class Book {
         return this.quantity;
     }
 
+    public float getRating() {
+        return this.rating;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,5 +56,8 @@ public class Book {
         this.quantity = quantity;
     }
 
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
 
 }

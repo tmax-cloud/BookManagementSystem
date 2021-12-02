@@ -45,10 +45,12 @@ public class BookController {
     Book one(@PathVariable Long id) {
         Rating rating = restTemplate.getForObject(
                 String.format("%s/rating/%d", ratingSvcAddr, id), Rating.class);
-        log.info(rating.toString());
 
-        return repository.findById(id)
+        Book book = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
+        book.setRating(rating.getRating());
+
+        return book;
     }
 
     @PutMapping("/books/{id}")

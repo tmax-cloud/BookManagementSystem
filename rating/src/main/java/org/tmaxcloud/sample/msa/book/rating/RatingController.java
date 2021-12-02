@@ -30,7 +30,7 @@ public class RatingController {
     @GetMapping("/rating/{id}")
     Rating one(@PathVariable Long id) {
 
-        return repository.findById(id)
+        return repository.findByBookId(id)
                 .orElseThrow(() -> new RatingNotFoundException(id));
     }
 
