@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: tmaxcloudck/example-payment:0.1
+          image: tmaxcloudck/example-payment:0.2
           ports:
             - containerPort: 8079
           env:
@@ -58,3 +58,5 @@ spec:
             value: payment-service
           - name: JAEGER_AGENT_HOST_ADDR
             value: ${JAEGER_AGENT_HOST_ADDR}
+          - name: ORDER_SERVICE_HOST
+            value: order-service
