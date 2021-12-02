@@ -1,29 +1,18 @@
 buildscript {
-    ext {
-        springBootVersion = '2.1.4.RELEASE'
-    }
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.6.1"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
     }
 }
 
-plugins {
-    id 'org.springframework.boot' version '2.6.1'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-}
-
-allprojects {
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
-}
-
 subprojects {
+    group 'org.tmaxcloud.sample.msa.book'
+    version '0.0.1'
+
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
@@ -38,7 +27,6 @@ subprojects {
         }
     }
 
-    // 모든 모듈에서 사용하는 라이브러리
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -51,7 +39,6 @@ subprojects {
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
     }
 }
 
@@ -60,9 +47,14 @@ project(':core') {
         implementation 'org.springframework.kafka:spring-kafka'
         testImplementation 'org.springframework.kafka:spring-kafka-test'
     }
+    bootJar {
+        archiveFileName.set("core.jar")
+    }
 }
 
 project(':rating') {
-    dependencies {
+
+    bootJar {
+        archiveFileName.set("rating.jar")
     }
 }
