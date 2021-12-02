@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: tmaxcloudck/example-order:0.2
+          image: tmaxcloudck/example-order:0.2.4
           ports:
             - containerPort: 8080
           env:
