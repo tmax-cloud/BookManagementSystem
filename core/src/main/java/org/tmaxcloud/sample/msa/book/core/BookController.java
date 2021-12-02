@@ -1,12 +1,25 @@
 package org.tmaxcloud.sample.msa.book.core;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @RestController
 public class BookController {
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
     private final BookRepository repository;
+
+    @Value("${RATING_URL}")
+    private String ratingSvcAddr;
+
+    @Autowired
+    RestTemplate restTemplate;
 
     BookController(BookRepository repository) {
         this.repository = repository;
@@ -16,6 +29,7 @@ public class BookController {
     // tag::get-aggregate-root[]
     @GetMapping("/books")
     List<Book> all() {
+
         return repository.findAll();
     }
     // end::get-aggregate-root[]
@@ -29,6 +43,9 @@ public class BookController {
 
     @GetMapping("/books/{id}")
     Book one(@PathVariable Long id) {
+        Rating rating = restTemplate.getForObject(
+                String.format("%s/rating/%d", ratingSvcAddr, id), Rating.class);
+        log.info(rating.toString());
 
         return repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));

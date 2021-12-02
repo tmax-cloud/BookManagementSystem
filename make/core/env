@@ -3,4 +3,4 @@ DB_PORT=5432
 DB_DATABASE=bookcore
 DB_USER=postgres
 DB_PASS=password
-RATING_URL=http://book-rating:8081
+RATING_URL=http://book-rating:8080
