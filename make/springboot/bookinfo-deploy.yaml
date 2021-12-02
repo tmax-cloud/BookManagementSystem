@@ -1,38 +1,37 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: payment-service
+  name: bookinfo-service
   labels:
-    name: payment-service
+    name: bookinfo-service
 spec:
   ports:
-    - nodePort: 30082
-      port: 8079
-      targetPort: 8079
+    - port: 8078
+      targetPort: 8078
       protocol: TCP
   selector:
-    app: payment-service
+    app: bookinfo-service
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: bookinfo-service
 spec:
   selector:
     matchLabels:
-      app: payment-service
+      app: bookinfo-service
   replicas: 1
   template:
     metadata:
       labels:
-        app: payment-service
+        app: bookinfo-service
     spec:
       containers:
-        - name: payment-service
-          image: tmaxcloudck/example-payment:0.1
+        - name: bookinfo-service
+          image:  tmaxcloudck/example-bookinfo:0.4.2
           ports:
-            - containerPort: 8079
+            - containerPort: 8078
           env:
           - name: DB_HOST
             valueFrom:
@@ -55,8 +54,6 @@ spec:
                 name: db-credentials
                 key: password
           - name: SERVICE_NAME
-            value: payment-service
+            value: bookinfo-service
           - name: JAEGER_AGENT_HOST_ADDR
             value: ${JAEGER_AGENT_HOST_ADDR}
-          - name: ORDER_SERVICE_HOST
-            value: order-service

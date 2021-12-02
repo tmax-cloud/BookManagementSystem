@@ -6,7 +6,7 @@ metadata:
     name: order-service
 spec:
   ports:
-      port: 8080
+    - port: 8080
       targetPort: 8080
       protocol: TCP
   selector:
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: tmaxcloudck/example-order:0.1
+          image: tmaxcloudck/example-order:0.2.4
           ports:
             - containerPort: 8080
           env:
@@ -57,3 +57,5 @@ spec:
             value: order-service
           - name: JAEGER_AGENT_HOST_ADDR
             value: ${JAEGER_AGENT_HOST_ADDR}
+          - name: PAYMENT_SERVICE_HOST
+            value: payment-service
