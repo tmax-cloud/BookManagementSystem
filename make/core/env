@@ -1,6 +1,13 @@
+RATING_URL=http://book-rating:8080
+
 DB_HOSTNAME=book-db
 DB_PORT=5432
 DB_DATABASE=bookcore
 DB_USER=postgres
 DB_PASS=password
-RATING_URL=http://book-rating:8080
+
+KAFKA_HOSTNAME=book-kafka
+KAFKA_PORT=9092
+
+JAEGER_AGENT_HOST=book-jaeger
+JAEGER_AGENT_PORT=6831

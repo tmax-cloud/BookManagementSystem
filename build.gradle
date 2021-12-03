@@ -33,6 +33,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
 
+        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
         runtimeOnly 'org.postgresql:postgresql'
@@ -53,8 +54,29 @@ project(':core') {
 }
 
 project(':rating') {
-
     bootJar {
         archiveFileName.set("rating.jar")
+    }
+}
+
+project(':order') {
+    dependencies {
+        implementation 'org.springframework.kafka:spring-kafka'
+        testImplementation 'org.springframework.kafka:spring-kafka-test'
+        // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    }
+    bootJar {
+        archiveFileName.set("order.jar")
+    }
+}
+
+project(':payment') {
+    dependencies {
+        // https://mvnrepository.com/artifact/com.google.code.gson/gson
+        implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    }
+    bootJar {
+        archiveFileName.set("payment.jar")
     }
 }
