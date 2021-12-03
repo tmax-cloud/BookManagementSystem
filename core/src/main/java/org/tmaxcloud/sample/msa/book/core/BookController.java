@@ -15,7 +15,7 @@ public class BookController {
 
     private final BookRepository repository;
 
-    @Value("${RATING_URL}")
+    @Value("${RATING_SVC_URL}")
     private String ratingSvcAddr;
 
     @Autowired
@@ -42,9 +42,7 @@ public class BookController {
 
     @GetMapping("/books/{id}")
     Book one(@PathVariable Long id) {
-        Rating rating = restTemplate.getForObject(
-                String.format("%s/rating/%d", ratingSvcAddr, id), Rating.class);
-
+        Rating rating = restTemplate.getForObject(ratingSvcAddr + "/rating/%d", Rating.class, id);
         Book book = repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException(id));
         book.setRating(rating.getRating());

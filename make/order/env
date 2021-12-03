@@ -1,9 +1,9 @@
-RATING_SVC_URL=http://book-rating:8080
-ORDER_SVC_URL=http://book-order:8080
+CORE_SVC_URL=http://book-core:8080
+PAYMENT_SVC_URL=http://book-payment:8080
 
 DB_HOSTNAME=book-db
 DB_PORT=5432
-DB_DATABASE=bookcore
+DB_DATABASE=bookorder
 DB_USER=postgres
 DB_PASS=password
 
