@@ -80,13 +80,13 @@ public class OrderController {
 
         switch (order.getType()) {
             case PURCHASE:
-                producer.sendPurchaseMessage(order.getQuantity());
+                producer.sendPurchaseMessage(new BookMessage(order.getBookId(), order.getQuantity()));
                 break;
             case SALE:
-                producer.sendSaleMessage(order.getQuantity());
+                producer.sendSaleMessage(new BookMessage(order.getBookId(), order.getQuantity()));
                 break;
             case RENT:
-                producer.sendRentMessage(order.getQuantity());
+                producer.sendRentMessage(new BookMessage(order.getBookId(), order.getQuantity()));
                 break;
             default:
                 return "failed (unknown order type)";

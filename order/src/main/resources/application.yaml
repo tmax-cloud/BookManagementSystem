@@ -12,8 +12,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
   kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_HOST}:${KAFKA_BOOTSTRAP_PORT}
     producer:
-      bootstrap-servers: ${KAFKA_BOOTSTRAP_HOST}:${KAFKA_BOOTSTRAP_PORT}
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer : org.apache.kafka.common.serialization.StringSerializer
 

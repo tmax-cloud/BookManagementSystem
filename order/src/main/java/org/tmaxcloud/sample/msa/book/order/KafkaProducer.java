@@ -14,26 +14,26 @@ public class KafkaProducer {
     private static final String TOPIC_SALE = "sale";
     private static final String TOPIC_RENT = "rent";
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, BookMessage> kafkaTemplate;
 
     @Autowired
-    public KafkaProducer(KafkaTemplate kafkaTemplate) {
+    public KafkaProducer(KafkaTemplate<String, BookMessage> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendPurchaseMessage(int quantity) {
-        log.info(String.format("Produce purchase message : %s", quantity));
-        this.kafkaTemplate.send(TOPIC_PURCHASE, Integer.toString(quantity));
+    public void sendPurchaseMessage(BookMessage msg) {
+        log.info(String.format("Produce purchase message : %s", msg));
+        this.kafkaTemplate.send(TOPIC_PURCHASE, msg);
 
     }
 
-    public void sendSaleMessage(int quantity) {
-        log.info(String.format("Produce sale message : %s", quantity));
-        this.kafkaTemplate.send(TOPIC_SALE, Integer.toString(quantity));
+    public void sendSaleMessage(BookMessage msg) {
+        log.info(String.format("Produce sale message : %s", msg));
+        this.kafkaTemplate.send(TOPIC_SALE, msg);
     }
 
-    public void sendRentMessage(int quantity) {
-        log.info(String.format("Produce rent message : %s", quantity));
-        this.kafkaTemplate.send(TOPIC_RENT, Integer.toString(quantity));
+    public void sendRentMessage(BookMessage msg) {
+        log.info(String.format("Produce rent message : %s", msg));
+        this.kafkaTemplate.send(TOPIC_RENT, msg);
     }
 }
