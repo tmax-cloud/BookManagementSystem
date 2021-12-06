@@ -5,35 +5,44 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Rating {
     private Long id;
-    private float rating;
+    private Long bookId;
+    private float score;
 
-    public Rating() {
-    }
+    public Rating() {}
 
-    public Rating(Long id, float rating) {
-        this.rating = rating;
+    public Rating(Long bookId, float score) {
+        this.bookId = bookId;
+        this.score = score;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Rating[id=%d, rating='%f']",
-                id, rating);
+                "Rating[id=%d, score='%f']",
+                id, score);
     }
 
     public Long getId() {
         return this.id;
     }
 
-    public float getRating() {
-        return this.rating;
+    public Long getBookId() {
+        return this.bookId;
+    }
+
+    public float getScore() {
+        return this.score;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setRating(float rating) {
-        this.rating = rating;
+    public void setBookId(Long id) {
+        this.bookId = id;
+    }
+
+    public void setScore(float score) {
+        this.score = score;
     }
 }

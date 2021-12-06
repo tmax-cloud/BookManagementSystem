@@ -1,3 +1,5 @@
 rootProject.name = 'BookManagementSystem'
 include 'core'
 include 'rating'
+include 'order'
+include 'payment'

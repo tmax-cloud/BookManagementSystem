@@ -1,0 +1,10 @@
+BOOK_ORDER_URL=http://book-order:8080
+
+DB_HOSTNAME=book-db
+DB_PORT=5432
+DB_DATABASE=bookpayment
+DB_USER=postgres
+DB_PASS=password
+
+JAEGER_AGENT_HOST=book-jaeger
+JAEGER_AGENT_PORT=6831

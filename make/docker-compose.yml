@@ -1,5 +1,77 @@
 version: '2.3'
 services:
+  core:
+    image: tmaxcloudck/book-core:0.0.1
+    container_name: book-core
+    env_file:
+      - ./core/env
+    restart: always
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    networks:
+      book:
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgresql
+      - jaeger
+  rating:
+    image: tmaxcloudck/book-rating:0.0.1
+    container_name: book-rating
+    env_file:
+      - ./rating/env
+    restart: always
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    networks:
+      - book
+    ports:
+      - 8081:8080
+    depends_on:
+      - postgresql
+      - jaeger
+  order:
+    image: tmaxcloudck/book-order:0.0.1
+    container_name: book-order
+    env_file:
+      - ./order/env
+    restart: always
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    networks:
+      - book
+    ports:
+      - 8082:8080
+    depends_on:
+      - postgresql
+      - jaeger
+  payment:
+    image: tmaxcloudck/book-payment:0.0.1
+    container_name: book-payment
+    env_file:
+      - ./payment/env
+    restart: always
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+    networks:
+      - book
+    ports:
+      - 8083:8080
+    depends_on:
+      - postgresql
+      - jaeger
   postgresql:
     image: tmaxcloudck/book-db:0.0.1
     container_name: book-db
@@ -18,40 +90,40 @@ services:
     ports:
       - 5432:5432
     shm_size: '1gb'
-  core:
-    image: tmaxcloudck/book-core:0.0.1
-    container_name: book-core
-    env_file:
-      - ./core/env
-    restart: always
-    cap_drop:
-      - ALL
-    cap_add:
-      - SETGID
-      - SETUID
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: book-jaeger
+    ports:
+      - 6831:6831/udp
+      - 16686:16686
     networks:
       book:
+  zookeeper:
+    image: bitnami/zookeeper:3.5.9
+    container_name: book-zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
-      - 8080:8080
-    depends_on:
-      - postgresql
-  rating:
-    image: tmaxcloudck/book-rating:0.0.1
-    container_name: book-rating
-    env_file:
-      - ./rating/env
-    restart: always
-    cap_drop:
-      - ALL
-    cap_add:
-      - SETGID
-      - SETUID
+      - 2181:2181
     networks:
-      - book
-    ports:
-      - 8081:8080
+      book:
+  kafka:
+    image: bitnami/kafka:3.0.0
+    container_name: book-kafka
     depends_on:
-      - postgresql
+      - zookeeper
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT= book-zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    networks:
+      book:
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
 
 networks:
   book:

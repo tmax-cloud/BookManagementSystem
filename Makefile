@@ -44,12 +44,24 @@ DOCKERFILEPATH_RATING=$(BUILDPATH)/$(RATING)
 DOCKERFILENAME_RATING=Dockerfile
 DOCKERIMAGENAME_RATING=$(DOCKER_NAMESPACE)/book-$(RATING)
 
+ORDER=order
+BINPATH_ORDER=$(BASEPATH)/$(ORDER)/build/libs
+DOCKERFILEPATH_ORDER=$(BUILDPATH)/$(ORDER)
+DOCKERFILENAME_ORDER=Dockerfile
+DOCKERIMAGENAME_ORDER=$(DOCKER_NAMESPACE)/book-$(ORDER)
+
+PAYMENT=payment
+BINPATH_PAYMENT=$(BASEPATH)/$(PAYMENT)/build/libs
+DOCKERFILEPATH_PAYMENT=$(BUILDPATH)/$(PAYMENT)
+DOCKERFILENAME_PAYMENT=Dockerfile
+DOCKERIMAGENAME_PAYMENT=$(DOCKER_NAMESPACE)/book-$(PAYMENT)
+
 DB=db
 DOCKERFILEPATH_DB=$(BUILDPATH)/$(DB)
 DOCKERFILENAME_DB=Dockerfile
 DOCKERIMAGENAME_DB=$(DOCKER_NAMESPACE)/book-$(DB)
 
-build: build-core build-rating build-db
+build: build-core build-rating build-order build-payment build-db
 
 build-core:
 	@echo "build jar for core..."
@@ -65,6 +77,22 @@ build-rating:
 	cp $(BINPATH_RATING)/* $(DOCKERFILEPATH_RATING)
 	@echo "build container for rating..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_RATING)/$(DOCKERFILENAME_RATING) -t $(DOCKERIMAGENAME_RATING):$(VERSIONTAG) .
+	@echo "Done."
+
+build-order:
+	@echo "build jar for order..."
+	@$(GRADLECMD) order:build
+	cp $(BINPATH_ORDER)/* $(DOCKERFILEPATH_ORDER)
+	@echo "build container for order..."
+	$(DOCKERBUILD) -f $(DOCKERFILEPATH_ORDER)/$(DOCKERFILENAME_ORDER) -t $(DOCKERIMAGENAME_ORDER):$(VERSIONTAG) .
+	@echo "Done."
+
+build-payment:
+	@echo "build jar for payment..."
+	@$(GRADLECMD) payment:build
+	cp $(BINPATH_PAYMENT)/* $(DOCKERFILEPATH_PAYMENT)
+	@echo "build container for payment..."
+	$(DOCKERBUILD) -f $(DOCKERFILEPATH_PAYMENT)/$(DOCKERFILENAME_PAYMENT) -t $(DOCKERIMAGENAME_PAYMENT):$(VERSIONTAG) .
 	@echo "Done."
 
 build-db:
@@ -99,3 +127,5 @@ install: build start
 clean:
 	@$(GRADLECMD) core:clean
 	@$(GRADLECMD) rating:clean
+	@$(GRADLECMD) order:clean
+	@$(GRADLECMD) payment:clean
