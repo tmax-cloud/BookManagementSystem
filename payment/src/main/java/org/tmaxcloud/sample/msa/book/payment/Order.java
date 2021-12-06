@@ -8,14 +8,12 @@ public class Order {
     private Type type;
     private Long bookId;
     private int quantity;
-    private Long paymentId;
 
     enum Type {
         PURCHASE, SALE, RENT
     }
 
-    public Order() {
-    }
+    public Order() {}
 
     public Order(Type type, Long bookId, int quantity) {
         this.type = type;
@@ -26,8 +24,8 @@ public class Order {
     @Override
     public String toString() {
         return String.format(
-                "Order[id=%d, title='%s', quantity='%s']",
-                id, bookId, quantity);
+                "Order[id=%d, type='%d', bookId='%d', quantity='%d']",
+                id, type, bookId, quantity);
     }
 
     public Long getId() {
@@ -46,10 +44,6 @@ public class Order {
         return this.quantity;
     }
 
-    public Long getPaymentId() {
-        return this.paymentId;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -66,7 +60,4 @@ public class Order {
         this.type = type;
     }
 
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
-    }
 }

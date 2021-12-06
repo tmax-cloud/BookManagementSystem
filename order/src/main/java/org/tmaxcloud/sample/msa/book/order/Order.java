@@ -3,7 +3,7 @@ package org.tmaxcloud.sample.msa.book.order;
 import javax.persistence.*;
 
 @Entity
-@Table(name="BOOK_ORDER")
+@Table(name = "BOOK_ORDER")
 public class Order {
 
     @Id
@@ -17,10 +17,7 @@ public class Order {
 
     private int quantity;
 
-    private Long paymentId;
-
-    public Order() {
-    }
+    public Order(){}
 
     public Order(OrderType type, Long bookId, int quantity) {
         this.type = type;
@@ -31,7 +28,7 @@ public class Order {
     @Override
     public String toString() {
         return String.format(
-                "Order[id=%d, type='%s' bookId='%s', quantity='%s']",
+                "Order[id='%d', type='%s' bookId='%s', quantity='%s']",
                 id, type, bookId, quantity);
     }
 
@@ -51,10 +48,6 @@ public class Order {
         return this.quantity;
     }
 
-    public Long getPaymentId() {
-        return this.paymentId;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -69,9 +62,5 @@ public class Order {
 
     public void setType(OrderType type) {
         this.type = type;
-    }
-
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
     }
 }

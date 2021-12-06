@@ -10,18 +10,33 @@ import org.springframework.stereotype.Service;
 public class KafkaConsumer {
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    @KafkaListener(topics = "purchase", groupId = "book")
+    private final BookRepository repository;
+
+    KafkaConsumer(BookRepository repository){
+        this.repository = repository;
+    }
+
+    @KafkaListener(topics = "purchase")
     public void consumePurchaseMessage(String quantity) {
         log.info(String.format("Consume purchase message : %s", quantity));
+        Long id = 1L;
+        Book book = repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        log.info("{} quantity++", book);
     }
 
-    @KafkaListener(topics = "sale", groupId = "book")
+    @KafkaListener(topics = "sale")
     public void consumeSaleMessage(String quantity) {
         log.info(String.format("Consume sale message : %s", quantity));
+        Long id = 1L;
+        Book book = repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        log.info("{} quantity++", book);
     }
 
-    @KafkaListener(topics = "rent", groupId = "book")
+    @KafkaListener(topics = "rent")
     public void consumeRentMessage(String quantity) {
         log.info(String.format("Consume rent message : %s", quantity));
+        Long id = 1L;
+        Book book = repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
+        log.info("{} quantity++", book);
     }
 }

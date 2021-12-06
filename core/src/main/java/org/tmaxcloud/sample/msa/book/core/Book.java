@@ -13,8 +13,7 @@ public class Book {
     @Transient
     private float rating;
 
-    public Book() {
-    }
+    public Book() {}
 
     public Book(String title, int quantity) {
         this.title = title;

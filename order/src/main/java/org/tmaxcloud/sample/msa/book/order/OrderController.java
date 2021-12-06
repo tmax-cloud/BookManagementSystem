@@ -2,29 +2,27 @@ package org.tmaxcloud.sample.msa.book.order;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 public class OrderController {
+
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
     private final OrderRepository repository;
-    private final RestTemplate restTemplate;
+    private final OrderPaymentRepository paymentRepository;
+    private final OrderPaymentService orderPaymentService;
     private final KafkaProducer producer;
 
-    @Value("${BOOK_PAYMENT_URL}")
-    private String paymentSvcAddr;
-
-    public OrderController(OrderRepository repository, RestTemplate restTemplate, KafkaProducer producer) {
+    public OrderController(OrderRepository repository, OrderPaymentRepository paymentRepository,
+                           OrderPaymentService orderPaymentService,
+                           KafkaProducer producer) {
         this.repository = repository;
-        this.restTemplate = restTemplate;
+        this.paymentRepository = paymentRepository;
+        this.orderPaymentService = orderPaymentService;
         this.producer = producer;
     }
 
@@ -34,21 +32,16 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public ResponseEntity<Order> newOrder(@RequestBody Order order) {
-        HttpEntity<Payment> payment = new HttpEntity<>(new Payment(order.getId()));
-        ResponseEntity<Payment> responseEntity = restTemplate.postForEntity(
-                paymentSvcAddr + "/payment", payment, Payment.class);
+    public Order newOrder(@RequestBody Order order) {
+        log.info("{} - order\n", order);
 
-        if (HttpStatus.OK != responseEntity.getStatusCode()) {
-            log.info("failed to call payment for new order...");
-            return ResponseEntity.internalServerError().build();
-        }
+        Order savedOrder = repository.save(order);
 
-        repository.save(order);
-        Payment response = responseEntity.getBody();
-        order.setPaymentId(response.getId());
+        log.info("{} - savedOrder\n", savedOrder);
 
-        return ResponseEntity.ok(order);
+        orderPaymentService.issuePaymentID(savedOrder);
+
+        return order;
     }
 
     @PostMapping("/orders/{id}")
@@ -66,15 +59,24 @@ public class OrderController {
                 });
     }
 
-    @PutMapping("/orders/{id}/success")
-    public String successOrder(@RequestBody Payment payment, @PathVariable Long id) {
-        String ret = "success";
+    @PostMapping("/orders/{id}/process")
+    public String processOrder(@RequestBody Payment payment, @PathVariable Long id) {
 
-        Order order = repository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-        if (payment.getId() != order.getPaymentId()) {
-            log.warn("does not match order's payment id");
-            ret = "failed";
-        }
+        // TODO: check payment id
+//        OrderPayment orderPayment = paymentRepository.findByOrderId(id)
+//                .orElseThrow(() -> new OrderNotFoundException(id));
+//
+//        log.info("internal order payment info: {}", orderPayment);
+//        log.info("request body payment info: {}", payment);
+//
+//        if (!Objects.equals(payment.getId(), orderPayment.getPaymentId())) {
+//            log.warn("internal order payment id({}) does not match with responses {})",
+//                    orderPayment.getPaymentId(), payment.getId());
+//            return "failed (doesn't match payment id)";
+//        }
+
+        Order order = repository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
 
         switch (order.getType()) {
             case PURCHASE:
@@ -87,9 +89,9 @@ public class OrderController {
                 producer.sendRentMessage(order.getQuantity());
                 break;
             default:
-                ret = "failed";
+                return "failed (unknown order type)";
         }
 
-        return ret;
+        return "success";
     }
 }

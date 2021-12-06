@@ -11,8 +11,7 @@ public class Rating {
     private Long id;
     private float rating;
 
-    public Rating() {
-    }
+    public Rating() {}
 
     public Rating(float rating) {
         this.rating = rating;

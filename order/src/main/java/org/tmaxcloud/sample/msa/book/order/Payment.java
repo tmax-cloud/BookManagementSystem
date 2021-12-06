@@ -7,8 +7,17 @@ public class Payment {
     private Long id;
     private Long orderId;
 
+    Payment() {}
+
     Payment(Long orderId) {
         this.orderId = orderId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Payment[id=%d, orderId='%d']",
+                id, orderId);
     }
 
     public Long getId() {
