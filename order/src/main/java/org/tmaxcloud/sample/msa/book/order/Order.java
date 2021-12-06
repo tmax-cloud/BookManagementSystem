@@ -3,16 +3,20 @@ package org.tmaxcloud.sample.msa.book.order;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name="BOOK_ORDER")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.ORDINAL)
     private OrderType type;
+
     private Long bookId;
+
     private int quantity;
+
     private Long paymentId;
 
     public Order() {

@@ -1,5 +1,4 @@
-CORE_SVC_URL=http://book-core:8080
-PAYMENT_SVC_URL=http://book-payment:8080
+BOOK_PAYMENT_URL=http://book-payment:8080
 
 DB_HOSTNAME=book-db
 DB_PORT=5432
@@ -7,7 +6,7 @@ DB_DATABASE=bookorder
 DB_USER=postgres
 DB_PASS=password
 
-KAFKA_BOOTSTRAP_HOST=book-zookeeper
+KAFKA_BOOTSTRAP_HOST=book-kafka
 KAFKA_BOOTSTRAP_PORT=9092
 
 JAEGER_AGENT_HOST=book-jaeger

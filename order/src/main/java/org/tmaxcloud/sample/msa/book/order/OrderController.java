@@ -19,7 +19,7 @@ public class OrderController {
     private final RestTemplate restTemplate;
     private final KafkaProducer producer;
 
-    @Value("${upstream.payment}")
+    @Value("${BOOK_PAYMENT_URL}")
     private String paymentSvcAddr;
 
     public OrderController(OrderRepository repository, RestTemplate restTemplate, KafkaProducer producer) {

@@ -58,7 +58,7 @@ services:
     image: tmaxcloudck/book-payment:0.0.1
     container_name: book-payment
     env_file:
-      - ./order/env
+      - ./payment/env
     restart: always
     cap_drop:
       - ALL
@@ -101,6 +101,8 @@ services:
   zookeeper:
     image: bitnami/zookeeper:3.5.9
     container_name: book-zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - 2181:2181
     networks:
@@ -117,7 +119,6 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     networks:
       book:
-
 volumes:
   zookeeper_data:
     driver: local

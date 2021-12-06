@@ -15,7 +15,7 @@ import java.util.Objects;
 public class PaymentController {
     private static final Logger log = LoggerFactory.getLogger(PaymentController.class);
 
-    @Value("${ORDER_SVC_URL}")
+    @Value("${BOOK_ORDER_URL}")
     private String orderSvcAddr;
 
     private final PaymentRepository repository;

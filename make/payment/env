@@ -1,4 +1,4 @@
-ORDER_SVC_URL=http://book-order:8080
+BOOK_ORDER_URL=http://book-order:8080
 
 DB_HOSTNAME=book-db
 DB_PORT=5432
