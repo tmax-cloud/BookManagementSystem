@@ -13,10 +13,16 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(RatingRepository repository) {
         return args -> {
-            log.info("Preloading " + repository.save(new Rating((float) 3.9)));
-            log.info("Preloading " + repository.save(new Rating((float) 4.4)));
-            log.info("Preloading " + repository.save(new Rating((float) 3.4)));
-            log.info("Preloading " + repository.save(new Rating((float) 2.1)));
+            log.info("Preloading " + repository.save(new Rating(1L, (float) 2.1)));
+            log.info("Preloading " + repository.save(new Rating(1L, (float) 4.1)));
+            log.info("Preloading " + repository.save(new Rating(1L, (float) 3.2)));
+            log.info("Preloading " + repository.save(new Rating(2L, (float) 3.4)));
+            log.info("Preloading " + repository.save(new Rating(3L, (float) 4.4)));
+            log.info("Preloading " + repository.save(new Rating(3L, (float) 1.2)));
+            log.info("Preloading " + repository.save(new Rating(3L, (float) 2.8)));
+            log.info("Preloading " + repository.save(new Rating(4L, (float) 3.9)));
+            log.info("Preloading " + repository.save(new Rating(4L, (float) 4.4)));
+            log.info("Preloading " + repository.save(new Rating(4L, (float) 4.5)));
         };
     }
 }
