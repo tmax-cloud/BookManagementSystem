@@ -1,4 +1,4 @@
-package org.tmaxcloud.sample.msa.book.payment;
+package orgltmaxcloud.sample.msa.book.common.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -59,5 +59,4 @@ public class Order {
     public void setType(Type type) {
         this.type = type;
     }
-
 }

@@ -1,5 +1,9 @@
 buildscript {
     repositories {
+        maven {
+            url "http://localhost:18080/repository/maven-public/"
+            allowInsecureProtocol = true
+        }
         mavenCentral()
     }
 
@@ -14,8 +18,6 @@ subprojects {
     version '0.0.1'
 
     apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
 
     repositories {
         mavenCentral()
@@ -24,6 +26,62 @@ subprojects {
     configurations {
         compileOnly {
             extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+
+    }
+}
+
+project(':common') {
+    apply plugin: 'maven-publish'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.0'
+        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.0'
+    }
+
+    jar {
+        archiveFileName.set("common.jar")
+    }
+
+    publishing {
+        publications {
+            bookLibrary(MavenPublication) {
+                groupId = 'org.tmaxcloud.sample.msa.book'
+                artifactId = 'common'
+                version = '0.0.1'
+                from components.java
+            }
+        }
+        repositories {
+            maven {
+                url = 'http://localhost:18080/repository/maven-releases/'
+                allowInsecureProtocol = true
+                credentials {
+                    username= 'admin'
+                    password= '3include'
+                }
+            }
+        }
+    }
+}
+
+project(':core') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven {
+            url "http://localhost:18080/repository/maven-public/"
+            allowInsecureProtocol = true
         }
     }
 
@@ -40,43 +98,109 @@ subprojects {
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    }
-}
-
-project(':core') {
-    dependencies {
         implementation 'org.springframework.kafka:spring-kafka'
         testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+        implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
     }
+
     bootJar {
         archiveFileName.set("core.jar")
     }
 }
 
 project(':rating') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'org.postgresql:postgresql'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
     bootJar {
         archiveFileName.set("rating.jar")
     }
 }
 
 project(':order') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven {
+            url "http://localhost:18080/repository/maven-public/"
+            allowInsecureProtocol = true
+        }
+    }
+
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'org.postgresql:postgresql'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
         implementation 'org.springframework.kafka:spring-kafka'
         testImplementation 'org.springframework.kafka:spring-kafka-test'
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+        implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
     }
+
     bootJar {
         archiveFileName.set("order.jar")
     }
 }
 
 project(':payment') {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven {
+            url "http://localhost:18080/repository/maven-public/"
+            allowInsecureProtocol = true
+        }
+    }
+
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+
+        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'org.postgresql:postgresql'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
 
+        implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
     }
+
     bootJar {
         archiveFileName.set("payment.jar")
     }

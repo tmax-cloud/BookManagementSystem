@@ -1,4 +1,4 @@
-package org.tmaxcloud.sample.msa.book.core;
+package orgltmaxcloud.sample.msa.book.common.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

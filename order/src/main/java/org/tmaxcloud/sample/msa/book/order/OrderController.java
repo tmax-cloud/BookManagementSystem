@@ -3,6 +3,7 @@ package org.tmaxcloud.sample.msa.book.order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import orgltmaxcloud.sample.msa.book.common.models.Payment;
 
 import java.util.List;
 import java.util.Objects;
