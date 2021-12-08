@@ -63,6 +63,10 @@ DOCKERIMAGENAME_DB=$(DOCKER_NAMESPACE)/book-$(DB)
 
 build: build-core build-rating build-order build-payment build-db
 
+build-common:
+	@echo "build jar for common..."
+	@$(GRADLECMD) common:build
+
 build-core:
 	@echo "build jar for core..."
 	@$(GRADLECMD) core:build
@@ -100,6 +104,11 @@ build-db:
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_DB)/$(DOCKERFILENAME_DB) -t $(DOCKERIMAGENAME_DB):$(VERSIONTAG) .
 	@echo "Done."
 
+prepare-build: build-common
+	@echo "start nexus..."
+	$(DOCKERRUN) --rm --name nexus -d -p 18080:8081 -v /nexus-data:/nexus-data -u root sonatype/nexus3
+	@echo "prepare common lib..."
+	@$(GRADLECMD) common:publish
 
 .PHONY: push-image
 push-image:

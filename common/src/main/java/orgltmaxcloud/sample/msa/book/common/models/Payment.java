@@ -1,4 +1,5 @@
-package org.tmaxcloud.sample.msa.book.order;
+package orgltmaxcloud.sample.msa.book.common.models;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -7,9 +8,9 @@ public class Payment {
     private Long id;
     private Long orderId;
 
-    Payment() {}
+    public Payment() {}
 
-    Payment(Long orderId) {
+    public Payment(Long orderId) {
         this.orderId = orderId;
     }
 
