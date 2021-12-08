@@ -18,7 +18,7 @@ public class BookController {
 
     private final BookRepository repository;
 
-    @Value("${BOOK_RATING_URL}")
+    @Value("${upstream.rating}")
     private String ratingSvcAddr;
 
     @Autowired

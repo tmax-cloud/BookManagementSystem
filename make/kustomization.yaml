@@ -1,0 +1,48 @@
+namespace: bookinfo
+#namePrefix: dev-
+#nameSuffix: "-001"
+commonLabels:
+  app: bookinfo
+
+configMapGenerator:
+- name: bookinfo-core
+  files:
+  - core/env
+- name: bookinfo-core-app-properties
+  files:
+  - core/application.properties
+- name: bookinfo-rating
+  files:
+  - rating/env
+- name: bookinfo-rating-app-properties
+  files:
+  - rating/application.properties
+- name: bookinfo-order
+  files:
+  - order/env
+- name: bookinfo-order-app-properties
+  files:
+  - order/application.properties
+- name: bookinfo-payment
+  files:
+  - payment/env
+- name: bookinfo-payment-app-properties
+  files:
+  - payment/application.properties
+
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    type: generated
+  annotations:
+    note: generated
+
+resources:
+- core/core.yaml
+- rating/rating.yaml
+- order/order.yaml
+- payment/payment.yaml
+- db/postgres.yaml
+- yaeger/yaeger.yaml
+- kafka/zookeeper.yaml
+- kafka/kafka.yaml

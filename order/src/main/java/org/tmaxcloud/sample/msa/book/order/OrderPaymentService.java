@@ -18,7 +18,7 @@ public class OrderPaymentService {
     private final OrderPaymentRepository paymentRepository;
     private final RestTemplate restTemplate;
 
-    @Value("${BOOK_PAYMENT_URL}")
+    @Value("${upstream.payment}")
     private String paymentSvcAddr;
 
     public OrderPaymentService(OrderPaymentRepository paymentRepository, RestTemplate restTemplate) {

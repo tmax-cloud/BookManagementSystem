@@ -16,8 +16,8 @@ public class OrderService {
 
     private final RestTemplate restTemplate;
 
-    @Value("${BOOK_ORDER_URL}")
-    private String orderSvcAddr;
+    @Value("${upstream.order}")
+    private String orderServiceUrl;
 
     public OrderService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -34,7 +34,7 @@ public class OrderService {
 
         log.info("process paying {}", payment);
         ResponseEntity<String> response = restTemplate.postForEntity(
-                orderSvcAddr + "/orders/{id}/process", payment.getOrderId(), String.class, payment.getOrderId());
+                orderServiceUrl + "/orders/{id}/process", payment.getOrderId(), String.class, payment.getOrderId());
 
         if (response.getStatusCode() != HttpStatus.OK) {
             log.warn("failed to process paying: {}", payment);

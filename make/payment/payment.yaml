@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bookinfo-payment
+  labels:
+    name: bookinfo-payment
+spec:
+  selector:
+    app: bookinfo-payment
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-payment
+spec:
+  selector:
+    matchLabels:
+      app: bookinfo-payment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookinfo-payment
+    spec:
+      containers:
+        - name: bookinfo-payment
+          image: tmaxcloudck/bookinfo-payment:v0.0.2
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: bookinfo-payment
+          volumeMounts:
+          - name: app-properties
+            mountPath: /app/application.properties
+            subPath: application.properties
+      volumes:
+      - name: app-properties
+        configMap:
+          name: bookinfo-payment-app-properties

@@ -1,10 +1,14 @@
 version: '2.3'
 services:
   core:
-    image: tmaxcloudck/book-core:0.0.1
-    container_name: book-core
+    image: tmaxcloudck/bookinfo-core:v0.0.1
+    container_name: bookinfo-core
     env_file:
       - ./core/env
+    volumes:
+      - type: bind
+        source: ./core/application.properties
+        target: /app/application.properties
     restart: always
     cap_drop:
       - ALL
@@ -19,10 +23,14 @@ services:
       - postgresql
       - jaeger
   rating:
-    image: tmaxcloudck/book-rating:0.0.1
-    container_name: book-rating
+    image: tmaxcloudck/bookinfo-rating:v0.0.1
+    container_name: bookinfo-rating
     env_file:
       - ./rating/env
+    volumes:
+      - type: bind
+        source: ./rating/application.properties
+        target: /app/application.properties
     restart: always
     cap_drop:
       - ALL
@@ -37,10 +45,14 @@ services:
       - postgresql
       - jaeger
   order:
-    image: tmaxcloudck/book-order:0.0.1
-    container_name: book-order
+    image: tmaxcloudck/bookinfo-order:v0.0.1
+    container_name: bookinfo-order
     env_file:
       - ./order/env
+    volumes:
+      - type: bind
+        source: ./order/application.properties
+        target: /app/application.properties
     restart: always
     cap_drop:
       - ALL
@@ -55,10 +67,14 @@ services:
       - postgresql
       - jaeger
   payment:
-    image: tmaxcloudck/book-payment:0.0.1
-    container_name: book-payment
+    image: tmaxcloudck/bookinfo-payment:v0.0.1
+    container_name: bookinfo-payment
     env_file:
       - ./payment/env
+    volumes:
+      - type: bind
+        source: ./payment/application.properties
+        target: /app/application.properties
     restart: always
     cap_drop:
       - ALL
@@ -73,8 +89,8 @@ services:
       - postgresql
       - jaeger
   postgresql:
-    image: tmaxcloudck/book-db:0.0.1
-    container_name: book-db
+    image: tmaxcloudck/bookinfo-db:v0.0.1
+    container_name: bookinfo-db
     restart: always
     cap_drop:
       - ALL
@@ -92,7 +108,7 @@ services:
     shm_size: '1gb'
   jaeger:
     image: jaegertracing/all-in-one:latest
-    container_name: book-jaeger
+    container_name: bookinfo-jaeger
     ports:
       - 6831:6831/udp
       - 16686:16686
@@ -100,7 +116,7 @@ services:
       book:
   zookeeper:
     image: bitnami/zookeeper:3.5.9
-    container_name: book-zookeeper
+    container_name: bookinfo-zookeeper
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
@@ -109,13 +125,13 @@ services:
       book:
   kafka:
     image: bitnami/kafka:3.0.0
-    container_name: book-kafka
+    container_name: bookinfo-kafka
     depends_on:
       - zookeeper
     ports:
       - 9092:9092
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT= book-zookeeper:2181
+      - KAFKA_CFG_ZOOKEEPER_CONNECT= bookinfo-zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     networks:
       book:

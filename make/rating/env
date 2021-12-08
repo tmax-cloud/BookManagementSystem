@@ -1,11 +1,9 @@
-DB_HOSTNAME=book-db
+DB_HOSTNAME=bookinfo-db
 DB_PORT=5432
 DB_DATABASE=bookrating
 DB_USER=postgres
 DB_PASS=password
-
 KAFKA_HOSTNAME=kafka
 KAFKA_PORT=9092
-
-JAEGER_AGENT_HOST=book-jaeger
+JAEGER_AGENT_HOST=bookinfo-jaeger
 JAEGER_AGENT_PORT=6831

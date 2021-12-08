@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bookinfo-jaeger
+  labels:
+    name: bookinfo-jaeger
+spec:
+  selector:
+    app: bookinfo-jaeger
+  ports:
+  - name: agent
+    port: 6831
+    targetPort: 6831
+    protocol: UDP
+  - name: frontend
+    port: 16686
+    targetPort: 16686
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-jaeger
+spec:
+  selector:
+    matchLabels:
+      app: bookinfo-jaeger
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookinfo-jaeger
+    spec:
+      containers:
+      - name: bookinfo-jaeger
+        image: jaegertracing/all-in-one:latest

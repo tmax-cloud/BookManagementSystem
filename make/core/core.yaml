@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bookinfo-core
+  labels:
+    name: bookinfo-core
+spec:
+  selector:
+    app: bookinfo-core
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-core
+spec:
+  selector:
+    matchLabels:
+      app: bookinfo-core
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookinfo-core
+    spec:
+      containers:
+        - name: bookinfo-core
+          image:  tmaxcloudck/bookinfo-core:v0.0.2
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: bookinfo-core
+          volumeMounts:
+          - name: app-properties
+            mountPath: /app/application.properties
+            subPath: application.properties
+      volumes:
+      - name: app-properties
+        configMap:
+          name: bookinfo-core-app-properties

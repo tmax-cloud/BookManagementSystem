@@ -1,0 +1,43 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bookinfo-order
+  labels:
+    name: bookinfo-order
+spec:
+  selector:
+    app: bookinfo-order
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-order
+spec:
+  selector:
+    matchLabels:
+      app: bookinfo-order
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bookinfo-order
+    spec:
+      containers:
+        - name: bookinfo-order
+          image: tmaxcloudck/bookinfo-order:v0.0.2
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: bookinfo-order
+          volumeMounts:
+          - name: app-properties
+            mountPath: /app/application.properties
+            subPath: application.properties
+      volumes:
+      - name: app-properties
+        configMap:
+          name: bookinfo-order-app-properties
