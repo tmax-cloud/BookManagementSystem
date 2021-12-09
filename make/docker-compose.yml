@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   core:
-    image: tmaxcloudck/bookinfo-core:v0.0.1
+    image: tmaxcloudck/bookinfo-core:v0.0.2
     container_name: bookinfo-core
     env_file:
       - ./core/env
@@ -23,7 +23,7 @@ services:
       - postgresql
       - jaeger
   rating:
-    image: tmaxcloudck/bookinfo-rating:v0.0.1
+    image: tmaxcloudck/bookinfo-rating:v0.0.2
     container_name: bookinfo-rating
     env_file:
       - ./rating/env
@@ -45,7 +45,7 @@ services:
       - postgresql
       - jaeger
   order:
-    image: tmaxcloudck/bookinfo-order:v0.0.1
+    image: tmaxcloudck/bookinfo-order:v0.0.2
     container_name: bookinfo-order
     env_file:
       - ./order/env
@@ -67,7 +67,7 @@ services:
       - postgresql
       - jaeger
   payment:
-    image: tmaxcloudck/bookinfo-payment:v0.0.1
+    image: tmaxcloudck/bookinfo-payment:v0.0.2
     container_name: bookinfo-payment
     env_file:
       - ./payment/env
@@ -89,7 +89,7 @@ services:
       - postgresql
       - jaeger
   postgresql:
-    image: tmaxcloudck/bookinfo-db:v0.0.1
+    image: tmaxcloudck/bookinfo-db:v0.0.2
     container_name: bookinfo-db
     restart: always
     cap_drop:

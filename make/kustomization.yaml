@@ -1,8 +1,8 @@
 namespace: bookinfo
 #namePrefix: dev-
 #nameSuffix: "-001"
-commonLabels:
-  app: bookinfo
+#commonLabels:
+#  app: bookinfo
 
 configMapGenerator:
 - name: bookinfo-core
