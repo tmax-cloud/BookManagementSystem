@@ -44,5 +44,5 @@ resources:
 - payment/payment.yaml
 - db/postgres.yaml
 - yaeger/yaeger.yaml
-- kafka/zookeeper.yaml
-- kafka/kafka.yaml
+#- kafka/zookeeper.yaml
+#- kafka/kafka.yaml
