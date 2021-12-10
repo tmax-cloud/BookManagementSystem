@@ -76,7 +76,7 @@ public class BookController {
     Book evaluateBook(@RequestBody String score, @PathVariable Long id) {
         Book book = repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         ResponseEntity<Rating> response = restTemplate.postForEntity(
-                ratingSvcAddr + "/api/rating/{id}", new Rating(id, Float.parseFloat(score)), Rating.class, id);
+                ratingSvcAddr + "/api/rating", new Rating(id, Float.parseFloat(score)), Rating.class);
 
         if (HttpStatus.OK != response.getStatusCode()) {
             log.warn("failed to set rating score for book:{}", id);
