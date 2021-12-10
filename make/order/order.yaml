@@ -10,7 +10,7 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-  type: LoadBalancer
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,6 +37,10 @@ spec:
           - name: app-properties
             mountPath: /app/application.properties
             subPath: application.properties
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
       volumes:
       - name: app-properties
         configMap:
