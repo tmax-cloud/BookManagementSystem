@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import orgltmaxcloud.sample.msa.book.common.models.Rating;
+import org.tmaxcloud.sample.msa.book.common.models.Rating;
 
 import java.util.List;
 

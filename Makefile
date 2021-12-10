@@ -61,11 +61,16 @@ DOCKERFILEPATH_DB=$(BUILDPATH)/$(DB)
 DOCKERFILENAME_DB=Dockerfile
 DOCKERIMAGENAME_DB=$(DOCKER_NAMESPACE)/bookinfo-$(DB)
 
-build: build-core build-rating build-order build-payment build-db
 
 build-common:
 	@echo "build jar for common..."
 	@$(GRADLECMD) common:build
+
+pre-build: build-common
+	@echo "prepare common lib..."
+	@$(GRADLECMD) common:publish
+
+build: pre-build build-core build-rating build-order build-payment build-db
 
 build-core:
 	@echo "build jar for core..."
@@ -103,12 +108,6 @@ build-db:
 	@echo "build container for db..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_DB)/$(DOCKERFILENAME_DB) -t $(DOCKERIMAGENAME_DB):$(VERSIONTAG) .
 	@echo "Done."
-
-prepare-build: build-common
-	@echo "start nexus..."
-	$(DOCKERRUN) --rm --name nexus -d -p 18080:8081 -v /nexus-data:/nexus-data -u root sonatype/nexus3
-	@echo "prepare common lib..."
-	@$(GRADLECMD) common:publish
 
 .PHONY: push-core push-rating push-order push-payment push-image
 push-core:
