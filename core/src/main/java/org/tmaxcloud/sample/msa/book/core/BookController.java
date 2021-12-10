@@ -13,6 +13,7 @@ import org.tmaxcloud.sample.msa.book.common.models.Rating;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
@@ -28,24 +29,19 @@ public class BookController {
         this.repository = repository;
     }
 
-    // Aggregate root
-    // tag::get-aggregate-root[]
     @GetMapping("/books")
     List<Book> all() {
         return repository.findAll();
     }
-    // end::get-aggregate-root[]
 
     @PostMapping("/books")
     Book newBook(@RequestBody Book newBook) {
         return repository.save(newBook);
     }
 
-    // Single item
-
     @GetMapping("/books/{id}")
     Book one(@PathVariable Long id) {
-        ResponseEntity<Rating> response = restTemplate.getForEntity(ratingSvcAddr + "/rating/{id}", Rating.class, id);
+        ResponseEntity<Rating> response = restTemplate.getForEntity(ratingSvcAddr + "/api/rating/{id}", Rating.class, id);
         if (HttpStatus.OK != response.getStatusCode()) {
             log.error("failed to get rating");
         }
@@ -80,7 +76,7 @@ public class BookController {
     Book evaluateBook(@RequestBody String score, @PathVariable Long id) {
         Book book = repository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
         ResponseEntity<Rating> response = restTemplate.postForEntity(
-                ratingSvcAddr + "/rating/{id}", new Rating(id, Float.parseFloat(score)), Rating.class, id);
+                ratingSvcAddr + "/api/rating/{id}", new Rating(id, Float.parseFloat(score)), Rating.class, id);
 
         if (HttpStatus.OK != response.getStatusCode()) {
             log.warn("failed to set rating score for book:{}", id);

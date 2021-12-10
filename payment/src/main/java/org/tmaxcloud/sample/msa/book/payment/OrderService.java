@@ -34,7 +34,7 @@ public class OrderService {
 
         log.info("process paying {}", payment);
         ResponseEntity<String> response = restTemplate.postForEntity(
-                orderServiceUrl + "/orders/{id}/process", payment.getOrderId(), String.class, payment.getOrderId());
+                orderServiceUrl + "/api/orders/{id}/process", payment.getOrderId(), String.class, payment.getOrderId());
 
         if (response.getStatusCode() != HttpStatus.OK) {
             log.warn("failed to process paying: {}", payment);

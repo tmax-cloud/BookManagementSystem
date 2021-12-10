@@ -31,7 +31,7 @@ public class OrderPaymentService {
         log.info("issue payment for order: {}", order.getId());
 
         ResponseEntity<Payment> response = restTemplate.postForEntity(
-                paymentSvcAddr + "/payments", new Payment(order.getId()), Payment.class);
+                paymentSvcAddr + "/api/payments", new Payment(order.getId()), Payment.class);
 
         if (HttpStatus.OK != response.getStatusCode()) {
             log.warn("failed to issue payment id for order: {}", order.getId());
