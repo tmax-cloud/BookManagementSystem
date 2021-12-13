@@ -5,27 +5,15 @@ namespace: bookinfo
 #  app: bookinfo
 
 configMapGenerator:
-- name: bookinfo-core
-  files:
-  - core/env
 - name: bookinfo-core-app-properties
   files:
   - core/application.properties
-- name: bookinfo-rating
-  files:
-  - rating/env
 - name: bookinfo-rating-app-properties
   files:
   - rating/application.properties
-- name: bookinfo-order
-  files:
-  - order/env
 - name: bookinfo-order-app-properties
   files:
   - order/application.properties
-- name: bookinfo-payment
-  files:
-  - payment/env
 - name: bookinfo-payment-app-properties
   files:
   - payment/application.properties
