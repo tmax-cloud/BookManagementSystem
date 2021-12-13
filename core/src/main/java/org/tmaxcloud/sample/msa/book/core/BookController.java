@@ -16,12 +16,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
-
     private final BookRepository repository;
-
     @Value("${upstream.rating}")
     private String ratingSvcAddr;
-
     @Autowired
     RestTemplate restTemplate;
 

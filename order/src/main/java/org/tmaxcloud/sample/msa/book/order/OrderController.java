@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.tmaxcloud.sample.msa.book.common.models.Payment;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -17,11 +16,11 @@ public class OrderController {
     private final OrderRepository repository;
     private final OrderPaymentRepository paymentRepository;
     private final OrderPaymentService orderPaymentService;
-    private final KafkaProducer producer;
+    private final KafkaBookMessageProducer producer;
 
     public OrderController(OrderRepository repository, OrderPaymentRepository paymentRepository,
                            OrderPaymentService orderPaymentService,
-                           KafkaProducer producer) {
+                           KafkaBookMessageProducer producer) {
         this.repository = repository;
         this.paymentRepository = paymentRepository;
         this.orderPaymentService = orderPaymentService;

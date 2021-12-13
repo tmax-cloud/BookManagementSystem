@@ -11,11 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class OrderService {
-
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
-
     private final RestTemplate restTemplate;
-
     @Value("${upstream.order}")
     private String orderServiceUrl;
 

@@ -6,13 +6,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KafkaConsumer {
-
-    private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
-
+public class KafkaBookMessageConsumer {
+    private static final Logger log = LoggerFactory.getLogger(KafkaBookMessageConsumer.class);
     private final BookRepository repository;
 
-    KafkaConsumer(BookRepository repository) {
+    KafkaBookMessageConsumer(BookRepository repository) {
         this.repository = repository;
     }
 
