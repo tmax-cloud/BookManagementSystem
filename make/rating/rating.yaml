@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: bookinfo-rating
-          image: tmaxcloudck/bookinfo-rating:v0.0.2
+          image: tmaxcloudck/bookinfo-rating
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

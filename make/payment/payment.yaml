@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: bookinfo-payment
-          image: tmaxcloudck/bookinfo-payment:v0.0.2
+          image: tmaxcloudck/bookinfo-payment
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

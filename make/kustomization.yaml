@@ -40,14 +40,19 @@ generatorOptions:
 
 images:
 - name: tmaxcloudck/bookinfo-core
+#  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-core
   newTag: v0.0.3
 - name: tmaxcloudck/bookinfo-rating
+#  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-rating
   newTag: v0.0.3
 - name: tmaxcloudck/bookinfo-order
+#  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-order
   newTag: v0.0.3
 - name: tmaxcloudck/bookinfo-payment
+#  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-payment
   newTag: v0.0.3
 - name: tmaxcloudck/bookinfo-db
+#  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-db
   newTag: v0.0.3
 
 resources:
@@ -56,6 +61,3 @@ resources:
 - order/order.yaml
 - payment/payment.yaml
 - db/postgres.yaml
-- yaeger/yaeger.yaml
-#- kafka/zookeeper.yaml
-#- kafka/kafka.yaml

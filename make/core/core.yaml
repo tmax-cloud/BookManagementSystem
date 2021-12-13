@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: bookinfo-core
-          image:  tmaxcloudck/bookinfo-core:v0.0.2
+          image:  tmaxcloudck/bookinfo-core
           imagePullPolicy: Always
           envFrom:
           - configMapRef:
