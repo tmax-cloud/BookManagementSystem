@@ -30,9 +30,6 @@ spec:
         - name: bookinfo-payment
           image: tmaxcloudck/bookinfo-payment
           imagePullPolicy: Always
-          envFrom:
-          - configMapRef:
-              name: bookinfo-payment
           volumeMounts:
           - name: app-properties
             mountPath: /app/application.properties

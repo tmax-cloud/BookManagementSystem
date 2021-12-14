@@ -30,9 +30,6 @@ spec:
         - name: bookinfo-order
           image: tmaxcloudck/bookinfo-order
           imagePullPolicy: Always
-          envFrom:
-          - configMapRef:
-              name: bookinfo-order
           volumeMounts:
           - name: app-properties
             mountPath: /app/application.properties
