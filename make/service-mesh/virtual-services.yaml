@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: bookinfo
+  name: bookinfo-core
 spec:
   hosts:
   - "bookinfo.172.22.11.21.nip.io"
@@ -16,6 +16,17 @@ spec:
         host: bookinfo-core
         port:
           number: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: bookinfo-rating
+spec:
+  hosts:
+  - "bookinfo.172.22.11.21.nip.io"
+  gateways:
+  - bookinfo-gateway
+  http:
   - match:
     - uri:
         prefix: /api/rating
@@ -24,6 +35,25 @@ spec:
         host: bookinfo-rating
         port:
           number: 8080
+        subset: v1
+      weight: 50
+    - destination:
+        host: bookinfo-rating
+        port:
+          number: 8080
+        subset: v2
+      weight: 50
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: bookinfo-order
+spec:
+  hosts:
+  - "bookinfo.172.22.11.21.nip.io"
+  gateways:
+  - bookinfo-gateway
+  http:
   - match:
     - uri:
         prefix: /api/orders
@@ -32,6 +62,17 @@ spec:
         host: bookinfo-order
         port:
           number: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: bookinfo-payment
+spec:
+  hosts:
+  - "bookinfo.172.22.11.21.nip.io"
+  gateways:
+  - bookinfo-gateway
+  http:
   - match:
     - uri:
         prefix: /api/payments
@@ -42,57 +83,15 @@ spec:
           number: 8080
 ---
 apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: kiali-vs
-  namespace: istio-system
-spec:
-  hosts:
-  - "kiali.172.22.11.21.nip.io"
-  gateways:
-  - kiali-gateway
-  http:
-  - route:
-    - destination:
-        host: kiali
-        port:
-          number: 20001
----
-apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: kiali
-  namespace: istio-system
+  name: ratings
 spec:
-  host: kiali
-  trafficPolicy:
-    tls:
-      mode: DISABLE
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: tracing-vs
-  namespace: istio-system
-spec:
-  hosts:
-  - "tracing.172.22.11.21.nip.io"
-  gateways:
-  - tracing-gateway
-  http:
-  - route:
-    - destination:
-        host: tracing
-        port:
-          number: 80
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: tracing
-  namespace: istio-system
-spec:
-  host: tracing
-  trafficPolicy:
-    tls:
-      mode: DISABLE
+  host: bookinfo-rating
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+  - name: v2
+    labels:
+      version: v2

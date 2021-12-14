@@ -4,6 +4,7 @@ metadata:
   name: bookinfo-rating
   labels:
     name: bookinfo-rating
+    service: bookinfo-rating
 spec:
   selector:
     app: bookinfo-rating
@@ -15,20 +16,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookinfo-rating
+  name: bookinfo-rating-v1
+  labels:
+    app: bookinfo-rating
+    version: v1
 spec:
   selector:
     matchLabels:
       app: bookinfo-rating
+      version: v1
   replicas: 1
   template:
     metadata:
       labels:
         app: bookinfo-rating
+        version: v1
     spec:
       containers:
-        - name: bookinfo-rating
-          image: tmaxcloudck/bookinfo-rating
+        - name: bookinfo-rating-v1
+          image: tmaxcloudck/bookinfo-rating-v1
           imagePullPolicy: Always
           volumeMounts:
           - name: app-properties
