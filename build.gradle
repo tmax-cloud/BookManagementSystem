@@ -98,7 +98,7 @@ project(':core') {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.kafka:spring-kafka'
-        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -128,7 +128,7 @@ project(':rating') {
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -164,7 +164,7 @@ project(':order') {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.kafka:spring-kafka'
-        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
@@ -203,7 +203,7 @@ project(':payment') {
         implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation group: 'io.opentracing.contrib', name: 'opentracing-spring-jaeger-cloud-starter', version: '3.3.1'
+        implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
