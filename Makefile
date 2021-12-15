@@ -4,6 +4,7 @@ BUILDPATH=$(BASEPATH)/make
 MAKEPATH=$(BASEPATH)/make
 # gradle parameters
 GRADLECMD=$(shell which gradle)
+BUILDARGS=
 
 # docker parameters
 DOCKERCMD=$(shell which docker)
@@ -30,7 +31,6 @@ PUSHSCRIPTPATH=$(MAKEPATH)
 PUSHSCRIPTNAME=pushimage.sh
 REGISTRYUSER=tmaxcloudck
 REGISTRYPASSWORD=tmax@cloud
-
 
 CORE=core
 BINPATH_CORE=$(BASEPATH)/$(CORE)/build/libs
@@ -63,42 +63,42 @@ DOCKERIMAGENAME_DB=$(DOCKER_NAMESPACE)/bookinfo-$(DB)
 
 
 build-common:
-	@echo "build jar for common..."
-	@$(GRADLECMD) common:build
+	@echo "common:build $(BUILDARGS)"
+	@$(GRADLECMD) common:build $(BUILDARGS)
 
 pre-build: build-common
-	@echo "prepare common lib..."
+	@echo "common: publish"
 	@$(GRADLECMD) common:publish
 
 build: pre-build build-core build-rating build-order build-payment build-db
 
 build-core:
-	@echo "build jar for core..."
-	@$(GRADLECMD) core:build
+	@echo "core:build $(BUILDARGS)"
+	@$(GRADLECMD) core:build $(BUILDARGS)
 	cp $(BINPATH_CORE)/* $(DOCKERFILEPATH_CORE)
 	@echo "build container for core..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_CORE)/$(DOCKERFILENAME_CORE) -t $(DOCKERIMAGENAME_CORE):$(VERSIONTAG) .
 	@echo "Done."
 
 build-rating:
-	@echo "build jar for rating..."
-	@$(GRADLECMD) rating:build
+	@echo "rating:build $(BUILDARGS)"
+	@$(GRADLECMD) rating:build $(BUILDARGS)
 	cp $(BINPATH_RATING)/* $(DOCKERFILEPATH_RATING)
 	@echo "build container for rating..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_RATING)/$(DOCKERFILENAME_RATING) -t $(DOCKERIMAGENAME_RATING):$(VERSIONTAG) .
 	@echo "Done."
 
 build-order:
-	@echo "build jar for order..."
-	@$(GRADLECMD) order:build
+	@echo "order:build $(BUILDARGS)"
+	@$(GRADLECMD) order:build $(BUILDARGS)
 	cp $(BINPATH_ORDER)/* $(DOCKERFILEPATH_ORDER)
 	@echo "build container for order..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_ORDER)/$(DOCKERFILENAME_ORDER) -t $(DOCKERIMAGENAME_ORDER):$(VERSIONTAG) .
 	@echo "Done."
 
 build-payment:
-	@echo "build jar for payment..."
-	@$(GRADLECMD) payment:build
+	@echo "payment:build $(BUILDARGS)"
+	@$(GRADLECMD) payment:build $(BUILDARGS)
 	cp $(BINPATH_PAYMENT)/* $(DOCKERFILEPATH_PAYMENT)
 	@echo "build container for payment..."
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_PAYMENT)/$(DOCKERFILENAME_PAYMENT) -t $(DOCKERIMAGENAME_PAYMENT):$(VERSIONTAG) .
@@ -150,7 +150,10 @@ push-image: push-core push-rating push-order push-payment push-db
 .PHONY: start
 start:
 	@echo "loading book msa images..."
-	@$(DOCKERCOMPOSECMD) $(DOCKERCOMPOSE_FILE_OPT) up -d
+	DOCKERIMAGENAME_CORE=$(DOCKERIMAGENAME_CORE) DOCKERIMAGENAME_RATING=$(DOCKERIMAGENAME_RATING) \
+		DOCKERIMAGENAME_ORDER=$(DOCKERIMAGENAME_ORDER) DOCKERIMAGENAME_PAYMENT=$(DOCKERIMAGENAME_PAYMENT) \
+		DOCKERIMAGENAME_DB=$(DOCKERIMAGENAME_DB) VERSION=$(VERSIONTAG)\
+		 $(DOCKERCOMPOSECMD) $(DOCKERCOMPOSE_FILE_OPT) up -d
 	@echo "Start complete."
 
 down:

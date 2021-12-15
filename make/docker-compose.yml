@@ -1,7 +1,7 @@
 version: '2.3'
 services:
   core:
-    image: tmaxcloudck/bookinfo-core:v0.0.3
+    image: ${DOCKERIMAGENAME_CORE}:${VERSION}
     container_name: bookinfo-core
     volumes:
       - type: bind
@@ -21,7 +21,7 @@ services:
       - postgresql
       - jaeger
   rating:
-    image: tmaxcloudck/bookinfo-rating:v0.0.3
+    image: ${DOCKERIMAGENAME_RATING}:${VERSION}
     container_name: bookinfo-rating
     volumes:
       - type: bind
@@ -41,7 +41,7 @@ services:
       - postgresql
       - jaeger
   order:
-    image: tmaxcloudck/bookinfo-order:v0.0.3
+    image: ${DOCKERIMAGENAME_ORDER}:${VERSION}
     container_name: bookinfo-order
     volumes:
       - type: bind
@@ -61,7 +61,7 @@ services:
       - postgresql
       - jaeger
   payment:
-    image: tmaxcloudck/bookinfo-payment:v0.0.3
+    image: ${DOCKERIMAGENAME_PAYMENT}:${VERSION}
     container_name: bookinfo-payment
     volumes:
       - type: bind
@@ -81,7 +81,7 @@ services:
       - postgresql
       - jaeger
   postgresql:
-    image: tmaxcloudck/bookinfo-db:v0.0.3
+    image: ${DOCKERIMAGENAME_DB}:${VERSION}
     container_name: bookinfo-db
     restart: always
     cap_drop:
