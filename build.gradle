@@ -20,32 +20,25 @@ subprojects {
     apply plugin: 'java'
 
     repositories {
-        mavenCentral()
-    }
-
-    configurations {
-        compileOnly {
-            extendsFrom annotationProcessor
+        maven {
+            url "http://localhost:18080/repository/maven-public/"
+            allowInsecureProtocol = true
         }
-    }
-
-    dependencies {
-
+        mavenCentral()
     }
 }
 
 project(':common') {
     apply plugin: 'maven-publish'
 
-    repositories {
-        mavenCentral()
-    }
-
     dependencies {
-        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.0'
-        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.0'
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        compileOnly 'org.projectlombok:lombok:1.18.22'
+
+        annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+        implementation 'com.fasterxml.jackson.core:jackson-core:2.13.0'
+        implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.0'
     }
 
     jar {
@@ -78,13 +71,6 @@ project(':core') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    repositories {
-        maven {
-            url "http://localhost:18080/repository/maven-public/"
-            allowInsecureProtocol = true
-        }
-    }
-
     dependencies {
         compileOnly 'org.projectlombok:lombok'
         developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -100,6 +86,7 @@ project(':core') {
         implementation 'org.springframework.kafka:spring-kafka'
         implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
+        implementation 'org.modelmapper:modelmapper:2.3.5'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.springframework.kafka:spring-kafka-test'
@@ -129,6 +116,7 @@ project(':rating') {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
+        implementation 'org.modelmapper:modelmapper:2.3.5'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -143,13 +131,6 @@ project(':rating') {
 project(':order') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-
-    repositories {
-        maven {
-            url "http://localhost:18080/repository/maven-public/"
-            allowInsecureProtocol = true
-        }
-    }
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'
@@ -168,6 +149,7 @@ project(':order') {
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
+        implementation 'org.modelmapper:modelmapper:2.3.5'
 
         testImplementation 'org.springframework.kafka:spring-kafka-test'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -183,13 +165,6 @@ project(':order') {
 project(':payment') {
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
-
-    repositories {
-        maven {
-            url "http://localhost:18080/repository/maven-public/"
-            allowInsecureProtocol = true
-        }
-    }
 
     dependencies {
         compileOnly 'org.projectlombok:lombok'
@@ -207,6 +182,7 @@ project(':payment') {
         // https://mvnrepository.com/artifact/com.google.code.gson/gson
         implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
         implementation 'org.tmaxcloud.sample.msa.book:common:0.0.1'
+        implementation 'org.modelmapper:modelmapper:2.3.5'
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
