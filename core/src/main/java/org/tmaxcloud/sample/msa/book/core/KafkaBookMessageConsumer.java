@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KafkaBookMessageConsumer {
+
     private static final Logger log = LoggerFactory.getLogger(KafkaBookMessageConsumer.class);
+
     private final BookRepository repository;
 
     KafkaBookMessageConsumer(BookRepository repository) {
