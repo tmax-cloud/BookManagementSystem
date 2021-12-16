@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.tmaxcloud.sample.msa.book.common.dto.PaymentDto;
 
 @Service
 public class OrderService {
@@ -32,15 +33,17 @@ public class OrderService {
             Thread.currentThread().interrupt();
         }
 
-        log.info("process paying {}", payment);
-        ResponseEntity<String> response = restTemplate.postForEntity(
-                orderServiceUrl + "/api/orders/{id}/process", payment.getOrderId(), String.class, payment.getOrderId());
+        PaymentDto paymentDto = new PaymentDto()
+                .setId(payment.getId())
+                .setOrderId(payment.getOrderId());
 
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                orderServiceUrl + "/api/orders/{id}/process", paymentDto, String.class, payment.getOrderId());
         if (response.getStatusCode() != HttpStatus.OK) {
-            log.warn("failed to process paying: {}", payment);
+            log.warn("failed to process paying: {}", paymentDto);
             return;
         }
 
-        log.info("order({}) paid {}", payment.getOrderId(), response.getBody());
+        log.info("order({}) paid {}", paymentDto, response.getBody());
     }
 }

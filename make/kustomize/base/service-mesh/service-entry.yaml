@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: external-payment
+spec:
+  hosts:
+  - bookinfo-payment.bookinfo-ext
+  location: MESH_EXTERNAL
+  ports:
+  - name: http
+    number: 8080
+    protocol: HTTP
+  resolution: DNS
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: tracing
+spec:
+  hosts:
+  - jaeger-collector.istio-system
+  location: MESH_EXTERNAL
+  ports:
+  - name: trace
+    number: 14268
+  resolution: DNS

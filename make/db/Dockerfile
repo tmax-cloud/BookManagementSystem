@@ -8,7 +8,6 @@ COPY ./make/db/initial-core.sql /docker-entrypoint-initdb.d/
 COPY ./make/db/initial-rating.sql /docker-entrypoint-initdb.d/
 COPY ./make/db/initial-rating-v2.sql /docker-entrypoint-initdb.d/
 COPY ./make/db/initial-order.sql /docker-entrypoint-initdb.d/
-COPY ./make/db/initial-payment.sql /docker-entrypoint-initdb.d/
 COPY ./make/db/docker-healthcheck.sh /docker-healthcheck.sh
 RUN chown -R postgres:postgres /docker-entrypoint.sh /docker-healthcheck.sh /docker-entrypoint-initdb.d \
     && chmod u+x /docker-entrypoint.sh /docker-healthcheck.sh

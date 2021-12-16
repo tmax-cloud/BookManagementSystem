@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookinfo-payment-db
+  labels:
+    app: bookinfo-payment-db
+spec:
+  selector:
+    app: bookinfo-payment-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: NodePort
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bookinfo-payment-db-pvc
+  labels:
+    app: bookinfo-payment-db
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookinfo-payment-db
+  labels:
+    app: bookinfo-payment-db
+spec:
+  selector:
+    matchLabels:
+      app: bookinfo-payment-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: bookinfo-payment-db
+    spec:
+      containers:
+      - image: tmaxcloudck/bookinfo-payment-db:v0.0.1
+        name: bookinfo-payment-db
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: "trust"
+        volumeMounts:
+        - name: bookinfo-payment-db
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: bookinfo-payment-db
+        persistentVolumeClaim:
+          claimName: bookinfo-payment-db-pvc

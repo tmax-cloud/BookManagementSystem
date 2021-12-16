@@ -8,6 +8,7 @@ import org.tmaxcloud.sample.msa.book.common.dto.OrderDto;
 import org.tmaxcloud.sample.msa.book.common.dto.PaymentDto;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,7 +19,7 @@ public class OrderController {
 
     private final OrderRepository repository;
 
-    private final OrderPaymentRepository paymentRepository;
+    private final OrderPaymentRepository orderPaymentRepository;
 
     private final OrderPaymentService orderPaymentService;
 
@@ -26,11 +27,11 @@ public class OrderController {
 
     private final ModelMapper modelMapper;
 
-    public OrderController(OrderRepository repository, OrderPaymentRepository paymentRepository,
+    public OrderController(OrderRepository repository, OrderPaymentRepository orderPaymentRepository,
                            OrderPaymentService orderPaymentService,
                            KafkaBookMessageProducer producer, ModelMapper modelMapper) {
         this.repository = repository;
-        this.paymentRepository = paymentRepository;
+        this.orderPaymentRepository = orderPaymentRepository;
         this.orderPaymentService = orderPaymentService;
         this.producer = producer;
         this.modelMapper = modelMapper;
@@ -63,20 +64,16 @@ public class OrderController {
     }
 
     @PostMapping("/orders/{id}/process")
-    public String processOrder(@RequestBody PaymentDto payment, @PathVariable Long id) {
+    public String processOrder(@RequestBody PaymentDto paymentDto, @PathVariable Long id) {
 
-        // TODO: check payment id
-//        OrderPayment orderPayment = paymentRepository.findByOrderId(id)
-//                .orElseThrow(() -> new OrderNotFoundException(id));
-//
-//        log.info("internal order payment info: {}", orderPayment);
-//        log.info("request body payment info: {}", payment);
-//
-//        if (!Objects.equals(payment.getId(), orderPayment.getPaymentId())) {
-//            log.warn("internal order payment id({}) does not match with responses {})",
-//                    orderPayment.getPaymentId(), payment.getId());
-//            return "failed (doesn't match payment id)";
-//        }
+        OrderPayment orderPayment = orderPaymentRepository.findByOrderId(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
+
+        if (!Objects.equals(paymentDto.getId(), orderPayment.getPaymentId())) {
+            log.warn("issued order's payment ID({}) does not match {})",
+                    orderPayment.getPaymentId(), paymentDto.getId());
+            return "failed (doesn't match payment id)";
+        }
 
         Order order = repository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(id));

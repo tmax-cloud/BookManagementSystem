@@ -1,26 +1,18 @@
 namespace: bookinfo
-#namePrefix: dev-
-#nameSuffix: "-001"
-#commonLabels:
-#  app: bookinfo
 
 configMapGenerator:
 - name: bookinfo-core-app-properties
   files:
-  - core/application.properties
+  - ./core/application.properties
 - name: bookinfo-rating-app-properties
   files:
-  - rating/application.properties
+  - ./rating/application.properties
 - name: bookinfo-rating-v2-app-properties
   files:
-  - rating/application-v2.properties
+  - ./rating/application-v2.properties
 - name: bookinfo-order-app-properties
   files:
-  - order/application.properties
-- name: bookinfo-payment-app-properties
-  files:
-  - payment/application.properties
-
+  - ./order/application.properties
 generatorOptions:
   disableNameSuffixHash: true
   labels:
@@ -28,32 +20,30 @@ generatorOptions:
   annotations:
     note: generated
 
-
 images:
 - name: tmaxcloudck/bookinfo-core
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-core
-  newTag: v0.0.3
+  newTag: v0.0.5
 - name: tmaxcloudck/bookinfo-rating-v1
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-rating
   newTag: v0.0.3
 - name: tmaxcloudck/bookinfo-rating-v2
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-rating
-  newTag: v0.0.4
+  newTag: v0.0.5
 - name: tmaxcloudck/bookinfo-order
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-order
-  newTag: v0.0.3
-- name: tmaxcloudck/bookinfo-payment
-  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-payment
-  newTag: v0.0.3
+  newTag: v0.0.5
 - name: tmaxcloudck/bookinfo-db
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-db
-  newTag: v0.0.4
+  newTag: v0.0.5
 
 resources:
 - core/core.yaml
 - rating/rating.yaml
 - rating/rating-v2.yaml
 - order/order.yaml
-- payment/payment.yaml
 - db/postgres.yaml
+- service-mesh/gateways.yaml
 - service-mesh/virtual-services.yaml
+- service-mesh/destination-rule.yaml
+- service-mesh/service-entry.yaml
