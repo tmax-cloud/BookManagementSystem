@@ -80,7 +80,6 @@ project(':core') {
 
         implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.kafka:spring-kafka'
@@ -112,7 +111,6 @@ project(':rating') {
 
         implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'
@@ -141,7 +139,6 @@ project(':order') {
 
         implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'org.springframework.kafka:spring-kafka'
@@ -173,9 +170,6 @@ project(':payment') {
         annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         annotationProcessor 'org.projectlombok:lombok'
 
-        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         implementation 'io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.3.1'

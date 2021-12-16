@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.tmaxcloud.sample.msa.book.common.dto.OrderDto;
 import org.tmaxcloud.sample.msa.book.common.dto.PaymentDto;
 
 @Service
@@ -31,8 +32,7 @@ public class OrderPaymentService {
         log.info("issue payment for order: {}", order.getId());
 
         ResponseEntity<PaymentDto> response = restTemplate.postForEntity(
-                paymentSvcAddr + "/api/payments", new PaymentDto().setOrderId(order.getId()), PaymentDto.class);
-
+                paymentSvcAddr + "/api/payments", new OrderDto().setId(order.getId()), PaymentDto.class);
         if (HttpStatus.OK != response.getStatusCode()) {
             log.warn("failed to issue payment id for order: {}", order.getId());
             return;

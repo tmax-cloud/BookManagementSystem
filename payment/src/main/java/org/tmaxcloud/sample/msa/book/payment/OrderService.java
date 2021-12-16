@@ -25,7 +25,7 @@ public class OrderService {
     }
 
     @Async
-    public void payFuture(Payment payment) {
+    public void payFuture(PaymentDto paymentDto) {
         try {
             int second = (int) (Math.random() * 10) + 1;
             Thread.sleep(second * 1000L);
@@ -33,12 +33,8 @@ public class OrderService {
             Thread.currentThread().interrupt();
         }
 
-        PaymentDto paymentDto = new PaymentDto()
-                .setId(payment.getId())
-                .setOrderId(payment.getOrderId());
-
         ResponseEntity<String> response = restTemplate.postForEntity(
-                orderServiceUrl + "/api/orders/{id}/process", paymentDto, String.class, payment.getOrderId());
+                orderServiceUrl + "/api/orders/{id}/process", paymentDto, String.class, paymentDto.getOrderId());
         if (response.getStatusCode() != HttpStatus.OK) {
             log.warn("failed to process paying: {}", paymentDto);
             return;

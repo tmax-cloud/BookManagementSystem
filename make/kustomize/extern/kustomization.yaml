@@ -16,10 +16,6 @@ images:
 - name: tmaxcloudck/bookinfo-payment
   newName: core.hr.172.22.11.16.nip.io/library/bookinfo-payment
   newTag: v0.0.5
-- name: tmaxcloudck/bookinfo-payment-db
-  newName: core.hr.172.22.11.16.nip.io/library/bookinfo-payment-db
-  newTag: v0.0.5
 
 resources:
 - payment.yaml
-- postgres.yaml

@@ -111,12 +111,7 @@ build-payment:
 	$(DOCKERBUILD) -f $(DOCKERFILEPATH_PAYMENT)/$(DOCKERFILENAME_PAYMENT) -t $(DOCKERIMAGENAME_PAYMENT):$(VERSIONTAG) .
 	@echo "Done."
 
-build-paymentdb:
-	@echo "build container for payment-db..."
-	$(DOCKERBUILD) -f $(DOCKERFILEPATH_PAYMENTDB)/$(DOCKERFILENAME_PAYMENTDB) -t $(DOCKERIMAGENAME_PAYMENTDB):$(VERSIONTAG) .
-	@echo "Done."
-
-build: pre-build build-core build-rating build-order build-db build-payment build-paymentdb
+build: pre-build build-core build-rating build-order build-db build-payment
 
 .PHONY: push-core push-rating push-order push-payment push-image
 push-core:
@@ -154,14 +149,7 @@ push-payment:
 		$(REGISTRYUSER) $(REGISTRYPASSWORD) $(REGISTRYSERVER)
 	@$(DOCKERRMIMAGE) $(REGISTRYSERVER)/$(DOCKERIMAGENAME_PAYMENT):$(VERSIONTAG)
 
-push-paymentdb:
-	@echo "pushing bookinfo payment-db image..."
-	@$(DOCKERTAG) $(DOCKERIMAGENAME_PAYMENTDB):$(VERSIONTAG) $(REGISTRYSERVER)/$(DOCKERIMAGENAME_PAYMENTDB):$(VERSIONTAG)
-	@$(PUSHSCRIPTPATH)/$(PUSHSCRIPTNAME) $(REGISTRYSERVER)/$(DOCKERIMAGENAME_PAYMENTDB):$(VERSIONTAG) \
-		$(REGISTRYUSER) $(REGISTRYPASSWORD) $(REGISTRYSERVER)
-	@$(DOCKERRMIMAGE) $(REGISTRYSERVER)/$(DOCKERIMAGENAME_PAYMENTDB):$(VERSIONTAG)
-
-push-image: push-core push-rating push-order push-db push-payment push-paymentdb
+push-image: push-core push-rating push-order push-db push-payment
 
 .PHONY: start
 start:
