@@ -232,7 +232,7 @@ objects:
               fieldRef:
                 fieldPath: metadata.namespace
           - name: KAFKA_ADVERTISED_LISTENERS
-            value: "INSIDE://${APP_NAME}-kafka.$(NAMESPACE):9092"
+            value: "INSIDE://:9092"
           - name: KAFKA_LISTENERS
             value: "INSIDE://:9092"
           - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
