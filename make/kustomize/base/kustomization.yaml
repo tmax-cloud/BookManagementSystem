@@ -13,6 +13,15 @@ configMapGenerator:
 - name: bookinfo-order-app-properties
   files:
   - ./order/application.properties
+- name: bookinfo-core
+  envs:
+  - ./core/env
+- name: bookinfo-rating
+  envs:
+  - ./rating/env
+- name: bookinfo-order
+  envs:
+  - ./order/env
 generatorOptions:
   disableNameSuffixHash: true
   labels:

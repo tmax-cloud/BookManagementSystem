@@ -21,6 +21,9 @@ spec:
         - name: bookinfo-rating-v2
           image: tmaxcloudck/bookinfo-rating-v2
           imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: bookinfo-rating
           volumeMounts:
           - name: app-properties
             mountPath: /app/application.properties
