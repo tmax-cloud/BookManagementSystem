@@ -3,6 +3,8 @@ services:
   core:
     image: ${DOCKERIMAGENAME_CORE}:${VERSION}
     container_name: bookinfo-core
+    env_file:
+    - core/env
     volumes:
       - type: bind
         source: ./core/application.properties
@@ -23,6 +25,8 @@ services:
   rating:
     image: ${DOCKERIMAGENAME_RATING}:${VERSION}
     container_name: bookinfo-rating
+    env_file:
+        - rating/env
     volumes:
       - type: bind
         source: ./rating/application.properties
@@ -43,6 +47,8 @@ services:
   order:
     image: ${DOCKERIMAGENAME_ORDER}:${VERSION}
     container_name: bookinfo-order
+    env_file:
+        - order/env
     volumes:
       - type: bind
         source: ./order/application.properties
@@ -63,6 +69,8 @@ services:
   payment:
     image: ${DOCKERIMAGENAME_PAYMENT}:${VERSION}
     container_name: bookinfo-payment
+    env_file:
+        - payment/env
     volumes:
       - type: bind
         source: ./payment/application.properties

@@ -1,0 +1,2 @@
+OPENTRACING_JAEGER_HTTP-SENDER_URL=http://bookinfo-jaeger:14268/api/traces
+UPSTREAM_ORDER=http://bookinfo-order:8080
