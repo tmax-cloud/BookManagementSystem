@@ -29,7 +29,7 @@
 | ----------------------- |-----|------------------------------------------------------ |
 | api/orders | GET |모든 주문 가져오기                               |
 | api/orders | POST |**`Payment` 서비스** 호출 및 새로운 주문  생성하기                                 |
-| api/orders/{id} | PUT |선턱한 주문 수정하기                                 |
+| api/orders/{id} | PUT |선택한 주문 수정하기                                 |
 | api/books/{id}/process | POST | **`Payment` 서비스** 에서 결제 완료 후 주문 처리하기 (**`BookInfo` 서비스** 호출 -수량 업데이트) |
 
 ### Payment
