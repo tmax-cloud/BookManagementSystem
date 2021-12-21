@@ -1,15 +1,43 @@
-## istio CR  
+## istio 
 
 ---
 
 ### 바로가기
 
-1. [VirtualService](#VirtualService)
-2. [DestinationRule](#DestinationRule)
-3. [Gateway](#Gateway)
-4. [ServiceEntry](#ServiceEntry)
+1. [VirtualService 예시](#VirtualService)
+2. [DestinationRule 예시](#DestinationRule)
+3. [Gateway 예시](#Gateway)
+4. [ServiceEntry 예시](#ServiceEntry)
 
 ---
+
+## BOOKINFO-istio 설정
+
+### virtualService:
+
+- [bookinfo-core](link), [bookinfo-rating](link), [bookinfo-order](link), [bookinfo-payment](link), [bookinfo-db(postgresSQL)](link), [kafka](link)
+
+### destinationRule
+
+- [bookinfo-rating서비스에 대한 트레픽 정책 설정](https://github.com/tmax-cloud/BookManagementSystem/blob/master/make/kustomize/base/service-mesh/destination-rule.yaml)
+
+### gatway:
+
+- [bookinfo-gateway](https://github.com/tmax-cloud/BookManagementSystem/blob/master/make/kustomize/base/service-mesh/gateways.yaml)
+
+### ServiceEntry
+
+- [payment 외부 서비스를 위한 serviceEntry](https://github.com/tmax-cloud/BookManagementSystem/blob/master/make/kustomize/base/service-mesh/service-entry.yaml)
+
+### EgressGateway
+
+- [payment외부 서비스를 위한 EgressGateway](link)
+
+
+
+---
+
+
 
 ### VirtualService
 
