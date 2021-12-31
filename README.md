@@ -19,6 +19,7 @@
         <li align="left"><A href = "docs/springboot_guide.md" >스프링부트 개발 가이드</A></li>
         <li align="left"><A href = "docs/istio.md" >istio 설정</A></li>        
         <li align="left"><A href = "docs/API_doc.md" >API Docs</A></li>
+        <li align="left"><A href = "docs/install.md" >install guide</A></li>
     </ul>
     </div>
 </div>
