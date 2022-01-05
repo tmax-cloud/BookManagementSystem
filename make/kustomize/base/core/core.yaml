@@ -3,10 +3,12 @@ apiVersion: v1
 metadata:
   name: bookinfo-core
   labels:
-    name: bookinfo-core
+    app: core
+    version: stable
 spec:
   selector:
-    app: bookinfo-core
+    app: core
+    version: stable
   ports:
     - port: 8080
       targetPort: 8080
@@ -19,12 +21,14 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: bookinfo-core
+      app: core
+      version: stable
   replicas: 1
   template:
     metadata:
       labels:
-        app: bookinfo-core
+        app: core
+        version: stable
     spec:
       containers:
         - name: bookinfo-core
@@ -33,14 +37,14 @@ spec:
           envFrom:
           - configMapRef:
               name: bookinfo-core
-          volumeMounts:
-          - name: app-properties
-            mountPath: /app/application.properties
-            subPath: application.properties
           readinessProbe:
             httpGet:
               path: /actuator/health
               port: 8080
+          volumeMounts:
+          - name: app-properties
+            mountPath: /app/application.properties
+            subPath: application.properties
       volumes:
       - name: app-properties
         configMap:

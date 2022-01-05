@@ -4,18 +4,18 @@ metadata:
   name: bookinfo-rating-v2
   labels:
     app: rating
-    version: v2
+    version: canary
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookinfo-rating
-      version: v2
+      app: rating
+      version: canary
   template:
     metadata:
       labels:
-        app: bookinfo-rating
-        version: v2
+        app: rating
+        version: canary
     spec:
       containers:
         - name: bookinfo-rating-v2

@@ -29,6 +29,14 @@ spec:
       labels:
         app: bookinfo-db
     spec:
+      initContainers:
+      - name: "data-permissions-ensurer"
+        image: tmaxcloudck/bookinfo-db:v0.0.1
+        command: [ "/bin/sh" ]
+        args: [ "-c", "chmod 700 /var/lib/postgresql/data/pg13 || true" ]
+        volumeMounts:
+          - name: bookinfo-db
+            mountPath: /var/lib/postgresql/data
       containers:
       - image: tmaxcloudck/bookinfo-db:v0.0.1
         name: bookinfo-db
