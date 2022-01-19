@@ -26,16 +26,18 @@ public class OrderService {
         this.webClient = webClient;
     }
 
+    @Async
     public void payFuture(PaymentDto paymentDto) {
         try {
             int second = (int) (Math.random() * 10) + 4;
             Thread.sleep(second * 1000L);
-            log.info(orderServiceUrl + "/api/orders/"+paymentDto.getOrderId()+"/process");
+
             Mono<String> response = webClient.post()
-                    .uri(orderServiceUrl + "/api/orders/"+paymentDto.getOrderId()+"/process")
+                    .uri(orderServiceUrl + "/api/orders/" + paymentDto.getOrderId() + "/process")
                     .bodyValue(paymentDto)
                     .retrieve()
                     .bodyToMono(String.class);
+
             response.subscribe(res -> {
                 log.info("order({}) paid {}", paymentDto, res);
             }, e -> {
