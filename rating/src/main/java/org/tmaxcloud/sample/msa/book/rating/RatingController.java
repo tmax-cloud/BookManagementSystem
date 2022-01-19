@@ -29,7 +29,11 @@ public class RatingController {
 
     @GetMapping("/rating/{id}")
     Rating one(@PathVariable Long id) {
-        return repository.findTopByBookIdOrderByCreatedTimeAtDesc(id);
+        List<Rating> ratings = repository.findByBookId(id);
+        float sum = repository.findByBookId(id).stream().map(Rating::getScore).reduce(Float::sum).get();
+        float avg = sum / ratings.size();
+        return new Rating(id, avg);
+//        return repository.findTopByBookIdOrderByCreatedTimeAtDesc(id);
     }
 
     @PutMapping("/rating/{id}")
